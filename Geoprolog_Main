@@ -39,3 +39,7 @@ edge(zone_b_hub, bin_3, 9).
 edge(bin_1, bin_2, 7).
 edge(bin_2, landfill, 14).
 edge(bin_3, landfill, 8).
+h(CurrentNode, GoalNode, H) :-
+    loc(CurrentNode, X1, Y1),
+    loc(GoalNode, X2, Y2),
+    H is sqrt((X2 - X1)^2 + (Y2 - Y1)^2).
