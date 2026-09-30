@@ -1,1 +1,7 @@
+% ==============================================================================
+% PROJECT: GeoProlog - Smart Urban Waste Collection & Vehicle Routing System
+% COURSE:  COU4303 - Artificial Intelligence (BSc IT - OUSL)
+% ==============================================================================
 
+:- dynamic(blocked/2).
+:- dynamic(bin_status/2). % Dynamic bin fill levels: bin_status(BinID, FillPercentage)
