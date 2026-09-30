@@ -20,3 +20,7 @@ edge(zone_b_hub, bin_3, 9).
 edge(bin_1, bin_2, 7).
 edge(bin_2, landfill, 14).
 edge(bin_3, landfill, 8).
+
+% Connected predicate ensures bidirectional traffic unless the road is blocked
+connected(A, B, D) :- edge(A, B, D), \+ blocked(A, B).
+connected(A, B, D) :- edge(B, A, D), \+ blocked(B, A).
