@@ -10,3 +10,13 @@ loc(bin_1,        12, 30).
 loc(bin_2,        28, 25).
 loc(bin_3,        35, 35).
 loc(landfill,     50, 40).
+
+edge(depot, zone_a_hub, 8).
+edge(depot, zone_b_hub, 12).
+edge(zone_a_hub, bin_1, 6).
+edge(zone_a_hub, bin_2, 10).
+edge(zone_b_hub, bin_2, 5).
+edge(zone_b_hub, bin_3, 9).
+edge(bin_1, bin_2, 7).
+edge(bin_2, landfill, 14).
+edge(bin_3, landfill, 8).
