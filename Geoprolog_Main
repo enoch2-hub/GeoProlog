@@ -1,1 +1,12 @@
+% ------------------------------------------------------------------------------
+% 1. KNOWLEDGE BASE: MAP GRAPH & SPATIAL COORDINATES
+% ------------------------------------------------------------------------------
 
+% Node Coordinates: loc(NodeName, X_Coordinate, Y_Coordinate)
+loc(depot,         0,  0).
+loc(zone_a_hub,   10, 15).
+loc(zone_b_hub,   25, 10).
+loc(bin_1,        12, 30).
+loc(bin_2,        28, 25).
+loc(bin_3,        35, 35).
+loc(landfill,     50, 40).
