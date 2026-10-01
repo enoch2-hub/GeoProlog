@@ -67,3 +67,67 @@ handle_choice(2) :-
     assert(blocked(A, B)),
     format('Road blocked: ~w <-> ~w~n', [A, B]),
     start.
+
+
+% --- Helper Predicate: Calculate Total Path Distance ---
+path_cost([_], 0).
+path_cost([A, B|Rest], TotalCost) :-
+    connected(A, B, D),
+    path_cost([B|Rest], RestCost),
+    TotalCost is D + RestCost.
+
+% ------------------------------------------------------------------------------
+% 5. COMPARISON & RESULTS DISPLAY
+% ------------------------------------------------------------------------------
+
+compare_routes(Start, Goal) :-
+    nl, write('=== GEOPROLOG ROUTE COMPARISON RESULTS ==='), nl,
+    format('From: ~w  -->  To: ~w~n', [Start, Goal]),
+    write('------------------------------------------'), nl,
+    
+    % Execute DFS
+    (dfs_path(Start, Goal, P_dfs, C_dfs) -> 
+        format('DFS Route : ~w | Cost: ~w km~n', [P_dfs, C_dfs]) ; 
+        write('DFS Route : No path found!'), nl),
+    
+    % Execute BFS
+    (bfs(Start, Goal, P_bfs, C_bfs) -> 
+        format('BFS Route : ~w | Cost: ~w km~n', [P_bfs, C_bfs]) ; 
+        write('BFS Route : No path found!'), nl),
+
+    % Execute A*
+    (astar(Start, Goal, P_a, C_a) -> 
+        format('A*  Route : ~w | Cost: ~w km (OPTIMAL)~n', [P_a, C_a]) ; 
+        write('A*  Route : No path found!'), nl),
+    write('------------------------------------------'), nl.
+% --- Helper Predicate: Calculate Total Path Distance ---
+path_cost([_], 0).
+path_cost([A, B|Rest], TotalCost) :-
+    connected(A, B, D),
+    path_cost([B|Rest], RestCost),
+    TotalCost is D + RestCost.
+
+% ------------------------------------------------------------------------------
+% 5. COMPARISON & RESULTS DISPLAY
+% ------------------------------------------------------------------------------
+
+compare_routes(Start, Goal) :-
+    nl, write('=== GEOPROLOG ROUTE COMPARISON RESULTS ==='), nl,
+    format('From: ~w  -->  To: ~w~n', [Start, Goal]),
+    write('------------------------------------------'), nl,
+    
+    % Execute DFS
+    (dfs_path(Start, Goal, P_dfs, C_dfs) -> 
+        format('DFS Route : ~w | Cost: ~w km~n', [P_dfs, C_dfs]) ; 
+        write('DFS Route : No path found!'), nl),
+    
+    % Execute BFS
+    (bfs(Start, Goal, P_bfs, C_bfs) -> 
+        format('BFS Route : ~w | Cost: ~w km~n', [P_bfs, C_bfs]) ; 
+        write('BFS Route : No path found!'), nl),
+
+    % Execute A*
+    (astar(Start, Goal, P_a, C_a) -> 
+        format('A*  Route : ~w | Cost: ~w km (OPTIMAL)~n', [P_a, C_a]) ; 
+        write('A*  Route : No path found!'), nl),
+    write('------------------------------------------'), nl.
