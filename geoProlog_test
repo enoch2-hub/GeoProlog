@@ -68,14 +68,67 @@ handle_choice(2) :-
     format('Road blocked: ~w <-> ~w~n', [A, B]),
     start.
 
-
-
 % --- Helper Predicate: Calculate Total Path Distance ---
+
 path_cost([_], 0).
 path_cost([A, B|Rest], TotalCost) :-
     connected(A, B, D),
     path_cost([B|Rest], RestCost),
     TotalCost is D + RestCost.
+
+/*----------------------------------------------------------------------------------------------------
+BREADTH-FIRST SEARCH (BFS)
+------------------------------------------------------------------------------------------------------*/
+
+
+bfs_counted(Start, Goal, Path, Cost, NodesExplored) :-
+        bfs_queue_counted([[Start]],Goal, Revpath, 1, NodesExplored),
+        reverse(Revpath ,path),
+        path_cost(Path, Cost).
+
+bfs_que_queue_counted([Goal|Reset]|_], Goal, [Goal|Reset], Count,Count).
+bfs_queue_counted([Current|Reset]|Others],Goal, Patj, Count, FinalCount) :-
+        Findall([Next, Current|Reset],
+                (connected(Current, Next, _), \+ memeber(Next, [Current|Reset])),NewsPaths),
+        Length(NewsPaths, N),
+        NewsCount is Count + N,
+        append(Others, NewPaths, UpdatedQueue, Goal, Path, NewCount, FinalCount).
+
+/*------------------------------------------------------------------------------
+A*  SEARCH (INFORMED HEURISTIC SEARCH)
+--------------------------------------------------------------------------------*/
+astar_counted(Start, Goal, Path, Cost, NodesExplored) :-
+        h(Start, Goalp, H0),
+        astar_search_counted([[H0,0, [Start]]], Goal, RevPath, Cost, 1, NodesExplored),
+        reverse(RevPath, Path).
+
+astar_Search_counted([[_, Cost, [Goal]|Reset]]|_), Goal,[Goal|Reset], Cost, Count, Count).
+        Findall([F2, G2 [Next, Current|Reset]],
+        (connected(Current, Next, StepCost),
+        G2 is G + StepCost,
+        h(Next, Goal, H),
+        F2 is G2 + H),
+        Children),
+
+Length(Children, N),
+NewCount is Count + N,
+append(Others, Children, Allnodes),
+sort(AllNodes, SortedNodes),
+astart_search_counted(SortedNodes, Goal, Path, Cost, NewCount, FinalCount).
+
+% ------------------PATH COST CALCULATOR
+
+path_cost([_],0).
+path_cost([A,B|Rest], TotalCost) :-
+        cocnected(A, B, D),
+        path_cost([b|Rest]m RestCost),
+        TotalCost is D + RestCost.
+
+
+
+
+
+
 
 % ------------------------------------------------------------------------------
 % 5. COMPARISON & RESULTS DISPLAY
