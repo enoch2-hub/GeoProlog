@@ -39,10 +39,40 @@ edge(zone_b_hub, bin_3, 9).
 edge(bin_1, bin_2, 7).
 edge(bin_2, landfill, 14).
 edge(bin_3, landfill, 8).
+
+% ------------------------------------------------------------------------------
+% 2. ROAD CONNECTIVITY & DYNAMIC BLOCKAGE RULES
+% ------------------------------------------------------------------------------
+
+% Connected predicate ensures bidirectional traffic unless the road is blocked
+connected(A, B, D) :- edge(A, B, D), \+ blocked(A, B).
+connected(A, B, D) :- edge(B, A, D), \+ blocked(B, A).
+
+% ------------------------------------------------------------------------------
+% 3. DYNAMIC EUCLIDEAN HEURISTIC FUNCTION
+% Calculates h(n) dynamically based on 2D straight-line distance to the Goal
+% ------------------------------------------------------------------------------
+
 h(CurrentNode, GoalNode, H) :-
     loc(CurrentNode, X1, Y1),
     loc(GoalNode, X2, Y2),
     H is sqrt((X2 - X1)^2 + (Y2 - Y1)^2).
+
+% ------------------------------------------------------------------------------
+% 4. SEARCH ALGORITHMS (BFS, DFS, A*)
+% ------------------------------------------------------------------------------
+
+% --- Depth-First Search (DFS) ---
+dfs_path(Start, Goal, Path, Cost) :-
+    dfs_travel(Start, Goal, [Start], RevPath, 0, Cost),
+    reverse(RevPath, Path).
+
+dfs_travel(Goal, Goal, Visited, Visited, Cost, Cost).
+dfs_travel(Current, Goal, Visited, Path, CostSoFar, TotalCost) :-
+    connected(Current, Next, StepCost),
+    \+ member(Next, Visited),
+    NewCost is CostSoFar + StepCost,
+    dfs_travel(Next, Goal, [Next|Visited], Path, NewCost, TotalCost).
 
 
 
