@@ -2,7 +2,7 @@
 % 1. KNOWLEDGE BASE: Nodes & Road Connections
 % --------------------------------
 
-% Node Coordinates: loc(NodeName, X_Coordinate, Y_Coordinate)
+% Node Coordinates: location(NodeName, X_Coordinate, Y_Coordinate)
 location(depot,         0,  0).
 location(zone_a_hub,   10, 15).
 location(zone_b_hub,   25, 10).
@@ -11,7 +11,7 @@ location(bin_2,        28, 25).
 location(bin_3,        35, 35).
 location(landfill,     50, 40).
 
-% Road Connections: edge(StartNode, EndNode, Distance_In_KM)
+% Road Connections: road(StartNode, EndNode, Distance_In_KM)
 road(depot, zone_a_hub, 8).
 road(depot, zone_b_hub, 12).
 road(zone_a_hub, bin_1, 6).
