@@ -28,8 +28,8 @@ edge(bin_3, landfill, 8).
 Valid_node(Node) :- loc(Node, _, _).
 
 %A road exists in either direction.
-road_exists(A, B) :- road(A, B, _).
-road_exists(A, B) :- road(B, A, _).
+road_exists(A, B) :- edge(A, B, _).
+road_exists(A, B) :- edge(B, A, _).
 
 
 % ------------------------------------------------------------------------------
