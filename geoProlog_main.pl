@@ -1,3 +1,16 @@
+% =================================
+% PROJECT: GeoProlog - Smart Urban Waste Collection & Vehicle Routing System
+% COURSE:  COU4303 - Artificial Intelligence
+% =====================
+
+
+
+
+% --------------------------------------------
+% 1. KNOWLEDGE BASE: Nodes & Road Connections
+% --------------------------------
+
+
 % Node Coordinates: loc(NodeName, X_Coordinate,Y_Coordinate)
 
 location(depot, 0,0).
