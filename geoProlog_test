@@ -15,7 +15,7 @@ loc(landfill, 50, 40).
 %The roads between places: edge(From, To, DistanceInKm)
 
 edge(depot, zone_a_hub, 8).
-edge(depot, zone_hub_b, 12).
+edge(depot, zone_b_hub, 12).
 edge(zone_a_hub, bin_1, 6).
 edge(zone_a_hub, bin_2, 10).
 edge(zone_b_hub, bin_2, 5).
