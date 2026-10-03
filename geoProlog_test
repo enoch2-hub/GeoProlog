@@ -2,6 +2,10 @@
 % 1. KNOWLEDGE BASE: MAP GRAPH & SPATIAL COORDINATES
 % ------------------------------------------------------------------------------
 
+:- dynamic(blocked/2).
+:- dynamic(bin_status/2). 
+
+
 Where each place located on our map; loc(NodeName, X,Y)
 
 loc(depot, 0,0).
