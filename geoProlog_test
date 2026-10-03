@@ -2,9 +2,20 @@
 % 1. KNOWLEDGE BASE: MAP GRAPH & SPATIAL COORDINATES
 % ------------------------------------------------------------------------------
 
+Where each place located on our map; loc(NodeName, X,Y)
+
+loc(depot, 0,0).
+loc(zone_a_hub,10,15)
+loc(zone_b_hub, 25, 10).
+loc(bin_1, 12, 30).
+loc(bin_2, 28,35).
+loc(bin_3, 35,35).
+loc(landfill, 50, 40).
+
+%The roads between places: edge(From, To, DistanceInKm)
 
 edge(depot, zone_a_hub, 8).
-edge(depot, zone_b_hub, 12).
+edge(depot, zone_hub_b, 12).
 edge(zone_a_hub, bin_1, 6).
 edge(zone_a_hub, bin_2, 10).
 edge(zone_b_hub, bin_2, 5).
@@ -13,32 +24,13 @@ edge(bin_1, bin_2, 7).
 edge(bin_2, landfill, 14).
 edge(bin_3, landfill, 8).
 
+%A Node is valid if it has coordinates.
+Valid_node(Node) :- loc(Node, _, _).
 
-% Node Coordinates: loc(NodeName, X_Coordinate, Y_Coordinate)
-loc(depot,         0,  0).
-loc(zone_a_hub,   10, 15).
-loc(zone_b_hub,   25, 10).
-loc(bin_1,        12, 30).
-loc(bin_2,        28, 25).
-loc(bin_3,        35, 35).
-loc(landfill,     50, 40).
+%A road exists in either direction.
+road_exists(A, B) :- road(A, B, _).
+road_exists(A, B) :- road(B, A, _).
 
-
-
-
-
-
-
-
-edge(depot, zone_a_hub, 8).
-edge(depot, zone_b_hub, 12).
-edge(zone_a_hub, bin_1, 6).
-edge(zone_a_hub, bin_2, 10).
-edge(zone_b_hub, bin_2, 5).
-edge(zone_b_hub, bin_3, 9).
-edge(bin_1, bin_2, 7).
-edge(bin_2, landfill, 14).
-edge(bin_3, landfill, 8).
 
 % ------------------------------------------------------------------------------
 % 2. ROAD CONNECTIVITY & DYNAMIC BLOCKAGE RULES
