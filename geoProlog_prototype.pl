@@ -245,7 +245,10 @@ handle_choice(3) :-
 
 handle_choice(4) :-
 	nl, write('Currently Blocked Roads:'), nl,
-	(blocked(A, B) -> list_blocked ; write('None'), nl),
+	(	blocked(_,_)
+	->	list_blocked
+	;	write('None'), nl
+	),
 	start.
 
 handle_choice(5) :-
