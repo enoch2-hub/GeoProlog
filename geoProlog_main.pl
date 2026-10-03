@@ -188,8 +188,8 @@ start
 	write('4. Show Blocked Roads'), nl,
 	write('5. Exit'), nl, nl,
 	write('Choose an option (1-5): '),
-	read(Choice) ,
-	handle_choice(Choice) .
+	read(Choice),
+	handle_choice(Choice).
 
 
 
