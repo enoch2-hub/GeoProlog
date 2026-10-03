@@ -71,3 +71,45 @@ h(CurrentNode, GoalNode, Distance) :-
 	XDiff is X2 - X1,
 	YDiff is Y2 - Y1,
 	Distance is sqrt(XDiff^2 + YDiff^2).
+
+	
+
+% --------------------------------------
+% 5. The SEARCH ALGORITHMS (The 3 algorithms -> BFS, DFS and A*)
+% ----------------------------
+
+% ---Depth First Search Implemntation ---
+dfs_path(StartNode, GoalNode, SolutionPath, TotalDistance) :-
+    traverse_dfs(StartNode, GoalNode, [StartNode], ReversedPath, 0, TotalDistance),
+    reverse(ReversedPath, SolutionPath).
+
+% Stop search when we reach the target location
+traverse_dfs(GoalNode, GoalNode, VisitedNodes, VisitedNodes, Cost, Cost).
+
+
+% Keep traversing adjacent unvisited locations
+traverse_dfs(CurrentNode, GoalNode, Visited, Path, Cost, FinalCost ) :-
+    connected(CurrentNode, NextNode, Distance),
+    \+ member(NextNode, Visited),
+    NewCost is Cost + Distance,
+    traverse_dfs(NextNode, GoalNode, [NextNode|Visited], Path, NewCost, FinalCost).
+
+
+% --- Breadth First Search Implemntation---
+bfs(StartNode, GoalNode, Path, TotalCost ) :-
+    bfs_search_queue([[StartNode]], GoalNode, RevPath),
+    reverse(RevPath, Path),
+    path_cost(Path, TotalCost).
+
+% Base case: Target reached at the front of a path queue
+bfs_search_queue([[Goal|PathRest]|_], Goal, [Goal|PathRest]).
+
+% Recursive step: Expand all adjacent unvisited nodes
+bfs_search_queue([[Current|VisitedRest]|RemainingQueue], Goal, FinalPath) :-
+    findall(
+        [Next, Current|VisitedRest],
+        ( connected(Current, Next, _), \+ member(Next, [Current|VisitedRest])),
+        BranchPaths
+    ),
+    append(RemainingQueue, BranchPaths, NextQueue),
+    bfs_search_queue(NextQueue, Goal, FinalPath).
