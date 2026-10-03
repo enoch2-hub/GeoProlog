@@ -74,7 +74,7 @@ h(CurrentNode, GoalNode, Distance) :-
 	location(GoalNode, X2, Y2),
 	XDiff is X2 - X1,
 	YDiff is Y2 - Y1,
-	Distance is sqrt(Dx^2 + Dy^2).
+	Distance is sqrt(XDiff^2 + YDiff^2).
 
 
 
