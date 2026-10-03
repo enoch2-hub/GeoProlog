@@ -113,3 +113,39 @@ bfs_search_queue([[Current|VisitedRest]|RemainingQueue], Goal, FinalPath) :-
     ),
     append(RemainingQueue, BranchPaths, NextQueue),
     bfs_search_queue(NextQueue, Goal, FinalPath).
+
+
+% --- A* Heuristic Search Implemntation---
+astar(StartNode, GoalNode, Path, Cost) :-
+    h(StartNode, GoalNode, InitialH),
+    astar_queue([[InitialH, 0, [StartNode]]], GoalNode, RevPath, Cost),
+    reverse(RevPath, Path).
+
+% Stop when the first path inthe queue reaches the goal
+astar_queue([[_, Cost, [GoalNode|Rest]]|_], GoalNode, [GoalNode|Rest], Cost).
+
+% Expand the current path and calculate the new A* cost
+astar_queue([[_, DistSoFar, [Current|Rest]]|OtherPaths], 
+	Goal, Path, TotalCost) :-
+    findall(
+        [F_Val, NewG, [NextNode, Current|Rest]],
+        (
+            connected(Current, NextNode, EdgeDist),
+            \+ member(NextNode, [Current|Rest]),
+            NewG is DistSoFar + EdgeDist,
+            h(NextNode, Goal, H_Val),
+            F_Val is NewG + H_Val
+        ),
+        DiscoveredNodes
+    ),
+    append(OtherPaths, DiscoveredNodes, CombinedQueue),
+    sort(CombinedQueue, SortedQueue),
+    astar_queue(SortedQueue, Goal, Path, TotalCost).
+
+
+% --- Helper Predicate: Calculate Cumulative Path Distance ---
+path_cost([_], 0).
+path_cost([NodeA, NodeB|RestNodes], TotalDistance) :-
+    connected(NodeA, NodeB, StepDistance),
+    path_cost([NodeB|RestNodes], RemDistance),
+    TotalDistance is StepDistance + RemDistance.
